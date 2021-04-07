@@ -5688,6 +5688,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: JohnLemon
       objectReference: {fileID: 0}
+    - target: {fileID: 5152504939373392562, guid: 7477ddc42601049e2bb5e60c796cf7e4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5152504939373424274, guid: 7477ddc42601049e2bb5e60c796cf7e4,
         type: 3}
       propertyPath: m_RootOrder
