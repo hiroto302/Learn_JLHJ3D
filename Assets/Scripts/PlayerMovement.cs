@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     Animator m_Animator;
     Rigidbody m_Rigidbody;
+    AudioSource m_AudioSource;
     Vector3 m_Movement;  // 移動ベクトル
     Quaternion m_Rotation = Quaternion.identity;  // 回転変数 初期化ではidentity(インスタンスされるオブジェクトのデフォルト値)を指定
     public float turnSpeed = 20f; // 回転速度
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
         */
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_AudioSource = GetComponent<AudioSource>();
     }
     /*
     物理演算とアニメーションの間の衝突を避けるために、アニメーターが物理演算のループと同期して実行されるようにした。
@@ -44,6 +46,19 @@ public class PlayerMovement : MonoBehaviour
         */
         Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         m_Rotation = Quaternion.LookRotation (desiredForward); // LookRotationメソッド 指定されたパラメーターの方向を向いた回転を作成
+
+        // 足音の再生
+        if (isWalking)
+        {
+            if (!m_AudioSource.isPlaying)
+            {
+                m_AudioSource.Play();
+            }
+        }
+        else
+        {
+            m_AudioSource.Stop();
+        }
     }
 
     /*
