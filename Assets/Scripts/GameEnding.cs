@@ -8,10 +8,13 @@ public class GameEnding : MonoBehaviour
     public float displayImageDuration = 1.0f;
     public GameObject player;
     public CanvasGroup exitBackgroundImageCanvasGroup;
+    public AudioSource exitAudio;
     public CanvasGroup caughtBackgroundImageCanvasGroup;
+    public AudioSource caughtAudio;
     bool m_IsPlayerExit; //初期値 false
     bool m_IsPlayerCaught;
     float m_Timer;       //初期値 0
+    bool m_HasAudioPlayed;
 
     void OnTriggerEnter (Collider other)
     {
@@ -24,16 +27,21 @@ public class GameEnding : MonoBehaviour
     {
         if (m_IsPlayerExit)
         {
-            EndLevel (exitBackgroundImageCanvasGroup, false);
+            EndLevel (exitBackgroundImageCanvasGroup, false, exitAudio);
         }
         else if (m_IsPlayerCaught)
         {
-            EndLevel (caughtBackgroundImageCanvasGroup, true);
+            EndLevel (caughtBackgroundImageCanvasGroup, true, caughtAudio);
         }
     }
 
-    void EndLevel (CanvasGroup imageCanvasGroup, bool doRestart)
+    void EndLevel (CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)
     {
+        if (!m_HasAudioPlayed)
+        {
+            audioSource.Play();
+            m_HasAudioPlayed = true;
+        }
         m_Timer += Time.deltaTime;
         imageCanvasGroup.alpha = m_Timer / fadeDuration;
         if (m_Timer > fadeDuration + displayImageDuration)
